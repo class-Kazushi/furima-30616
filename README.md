@@ -20,16 +20,17 @@ has_many :purchase_records
 
 ## productsテーブル
 
-| Column          | Type       | Option            |
-|-----------------|------------|-------------------|
-| name            | string     | null: false       |
-| details         | text       | null: false       |
-| category        | integer    | null: false       |
-| condition       | integer    | null: false       |
-| delivery_charge | integer    | null: false       |
-| region          | integer    | null: false       |
-| period          | integer    | null: false       |
-| user            | references | foreign_key: true |
+| Column             | Type       | Option            |
+|--------------------|------------|-------------------|
+| name               | string     | null: false       |
+| details            | text       | null: false       |
+| category_id        | integer    | null: false       |
+| condition_id       | integer    | null: false       |
+| delivery_charge_id | integer    | null: false       |
+| region_id          | integer    | null: false       |
+| period_id          | integer    | null: false       |
+| price              | string     | null: false       |
+| user               | references | foreign_key: true |
 
 ### Association
 
@@ -54,7 +55,7 @@ has_one :address
 | Column             | Type       | Option            |
 |--------------------|------------|-------------------|
 | postal_code        | string     | null: false       |
-| prefecture         | integer    | null: false       |
+| prefecture_id      | integer    | null: false       |
 | city               | string     | null: false       |
 | address_num        | string     | null: false       |
 | building_name      | string     |                   |
