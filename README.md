@@ -2,12 +2,16 @@
 
 ## usersテーブル
 
-| Column      | Type   | Option                    |
-|-------------|--------|---------------------------|
-| Family_name | string | null: false               |
-| First_name  | string | null: false               |
-| Email       | string | null: false, unique: true |
-| Password    | string | null: false               |
+| Column          | Type   | Option                    |
+|-----------------|--------|---------------------------|
+| nickname        | string | null: false               |
+| email           | string | null: false, unique: true |
+| Password        | string | null: false               |
+| family_name     | string | null: false               |
+| first_name      | string | null: false               |
+| family_furigana | string | null: false               |
+| first_furigana  | string | null: false               |
+| birthday        | string | null: false               |
 
 ### Association
 
@@ -18,15 +22,14 @@ has_many :purchase_records
 
 | Column          | Type       | Option            |
 |-----------------|------------|-------------------|
-| image           |            |                   |
 | name            | string     | null: false       |
 | details         | text       | null: false       |
-| category        | string     | null: false       |
-| condition       | string     | null: false       |
-| delivery_charge | string     | null: false       |
-| region          | string     | null: false       |
-| period          | string     | null: false       |
-| user_id         | references | foreign_key: true |
+| category        | integer    | null: false       |
+| condition       | integer    | null: false       |
+| delivery_charge | integer    | null: false       |
+| region          | integer    | null: false       |
+| period          | integer    | null: false       |
+| user            | references | foreign_key: true |
 
 ### Association
 
@@ -37,28 +40,26 @@ has_one :purchase_record
 
 | Column          | Type       | Option            |
 |-----------------|------------|-------------------|
-| credit_num      | string     | null: false       |
-| credit_code     | string     | null: false       |
-| expiration_date | string     | null: false       |
-| credit_name     | string     | null: false       |
-| user_id         | references | foreign_key: true |
+| user            | references | foreign_key: true |
+| product         | references | foreign_key: true |
 
 ### Association
 
 belongs_to :user
-has_one :product
-has_many :addresses
+belongs_to :product
+has_one :address
 
 ## addressesテーブル
 
 | Column             | Type       | Option            |
 |--------------------|------------|-------------------|
 | postal_code        | string     | null: false       |
-| prefecture         | string     | null: false       |
+| prefecture         | integer    | null: false       |
 | city               | string     | null: false       |
-| address            | string     | null: false       |
-| phone_num          | references | null: false       |
-| purchase_record_id | references | foreign_key: true |
+| address_num        | string     | null: false       |
+| building_name      | string     |                   |
+| phone_num          | string     | null: false       |
+| purchase_record    | references | foreign_key: true |
 
 ### Association
 
