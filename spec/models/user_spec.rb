@@ -9,32 +9,6 @@ describe User do
       it "nicknameとemail、passwordとpassword_confirmation、family_nameとfirst_name、family_furiganaとfirst_furigana、birthdayが存在すれば登録できる" do
         expect(@user).to be_valid
       end
-      it "passwordが6文字以上であれば登録できる" do
-        @user.password = "000aaa"
-        @user.password_confirmation = "000aaa"
-        expect(@user).to be_valid
-      end
-      it "passwordが半角英数字混合されていれば登録できる" do
-        @user.password = "000aaa"
-        @user.password_confirmation = "000aaa"
-        expect(@user).to be_valid
-      end
-      it "family_nameが全角で入力されていれば登録できる" do
-        @user.family_name = "あア阿"
-        expect(@user).to be_valid
-      end
-      it "first_nameが全角で入力されていれば登録できる" do
-        @user.first_name = "いイ井"
-        expect(@user).to be_valid
-      end
-      it "family_furiganaが全角カナで入力されていれば登録できる" do
-        @user.family_furigana = "アアア"
-        expect(@user).to be_valid
-      end
-      it "first_furiganaが全角カナで入力されていれば登録できる" do
-        @user.first_furigana = "イイイ"
-        expect(@user).to be_valid
-      end
     end
 
     context '新規登録がうまくいかない時' do
