@@ -6,12 +6,12 @@
 |-----------------|--------|---------------------------|
 | nickname        | string | null: false               |
 | email           | string | null: false, unique: true |
-| Password        | string | null: false               |
+| password        | string | null: false               |
 | family_name     | string | null: false               |
 | first_name      | string | null: false               |
 | family_furigana | string | null: false               |
 | first_furigana  | string | null: false               |
-| birthday        | string | null: false               |
+| birthday        | date   | null: false               |
 
 ### Association
 
