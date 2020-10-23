@@ -16,4 +16,7 @@ class User < ApplicationRecord
     validates :first_furigana, format: { with: /\A[ァ-ヶー－]+\z/ }
     validates :birthday
   end
+
+  has_many :products
+  
 end
