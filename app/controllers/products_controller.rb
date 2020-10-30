@@ -1,9 +1,10 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :move_to_index, only: [:edit, :update, :destroy]
+  before_action :sold_out_block, only: [:edit, :update, :destroy]
 
   def index
-    @products = Product.order("created_at DESC")
+    @products = Product.order('created_at DESC')
   end
 
   def new
@@ -50,9 +51,12 @@ class ProductsController < ApplicationController
 
   def move_to_index
     @product = Product.find(params[:id])
-    unless current_user == @product.user
-      redirect_to action: :index
-    end
+    redirect_to action: :index unless current_user == @product.user
   end
 
+  def sold_out_block
+    if @product.purchase_record.present?
+      redirect_to root_path
+    end
+  end
 end

@@ -6,9 +6,9 @@ class User < ApplicationRecord
 
   with_options presence: true do
     validates :nickname
-    EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+    EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
     validates :email, uniqueness: true, format: { with: EMAIL_REGEX }
-    PASSWORD_REGEX = /([0-9].*[a-zA-Z]|[a-zA-Z].*[0-9])/
+    PASSWORD_REGEX = /([0-9].*[a-zA-Z]|[a-zA-Z].*[0-9])/.freeze
     validates :password, length: { minimum: 6 }, format: { with: PASSWORD_REGEX }
     validates :family_name, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/ }
     validates :first_name, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/ }
@@ -18,5 +18,5 @@ class User < ApplicationRecord
   end
 
   has_many :products
-  
+  has_many :purchase_records
 end
