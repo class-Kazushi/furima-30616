@@ -51,7 +51,9 @@ class ProductsController < ApplicationController
 
   def move_to_index
     @product = Product.find(params[:id])
-    redirect_to action: :index unless current_user == @product.user
+    unless current_user == @product.user
+      redirect_to action: :index 
+    end
   end
 
   def sold_out_block
