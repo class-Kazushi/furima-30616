@@ -1,6 +1,8 @@
 class PurchaseRecordsController < ApplicationController
   before_action :authenticate_user!
-  
+  before_action :move_to_top
+  before_action :sold_out_block
+
   def index
     @purchase_address = PurchaseAddress.new
   end
@@ -8,6 +10,7 @@ class PurchaseRecordsController < ApplicationController
   def create
     @purchase_address = PurchaseAddress.new(purchase_record_params)
     if @purchase_address.valid?
+      pay_product
       @purchase_address.save
       redirect_to root_path
     else
@@ -18,7 +21,24 @@ class PurchaseRecordsController < ApplicationController
   private
 
   def purchase_record_params
-    params.permit(:product_id, :postal_code, :prefecture_id, :city, :address_num, :building_name, :phone_num).merge(user_id: current_user.id, purchase_record_id: params[:purchase_record_id])
+    params.permit(:product_id, :postal_code, :prefecture_id, :city, :address_num, :building_name, :phone_num, :token).merge(user_id: current_user.id)
   end
 
+  def pay_product
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    Payjp::Charge.create(
+      amount: Product.find(params[:product_id]).price,
+      card: purchase_record_params[:token],
+      currency: 'jpy'
+    )
+  end
+
+  def move_to_top
+    @product = Product.find(params[:product_id])
+    redirect_to root_path if current_user == @product.user
+  end
+
+  def sold_out_block
+    redirect_to root_path if @product.purchase_record.present?
+  end
 end
