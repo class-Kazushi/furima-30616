@@ -1,5 +1,4 @@
 class PurchaseRecordsController < ApplicationController
-  before_action :authenticate_user!
   before_action :move_to_top
   before_action :sold_out_block
 
@@ -35,10 +34,14 @@ class PurchaseRecordsController < ApplicationController
 
   def move_to_top
     @product = Product.find(params[:product_id])
-    redirect_to root_path if current_user == @product.user
+    unless current_user != @product.user && user_signed_in?
+      redirect_to root_path 
+    end
   end
 
   def sold_out_block
-    redirect_to root_path if @product.purchase_record.present?
+    if @product.purchase_record.present?
+      redirect_to root_path 
+    end
   end
 end

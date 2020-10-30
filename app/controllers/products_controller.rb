@@ -55,6 +55,8 @@ class ProductsController < ApplicationController
   end
 
   def sold_out_block
-    redirect_to root_path if @product.purchase_record.present?
+    if @product.purchase_record.present?
+      redirect_to root_path
+    end
   end
 end
