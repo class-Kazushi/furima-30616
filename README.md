@@ -17,6 +17,7 @@
 
 has_many :products
 has_many :purchase_records
+has_many :comments
 
 ## productsテーブル
 
@@ -36,6 +37,7 @@ has_many :purchase_records
 
 belongs_to :user
 has_one :purchase_record
+has_many :comments
 
 ## purchase_recordsテーブル
 
@@ -65,3 +67,14 @@ has_one :address
 ### Association
 
 belongs_to :purchase_record
+
+## Commentsテーブル
+
+| Column  | Type       | Option            |
+|---------|------------|-------------------|
+| text    | text       | null: false       |
+| user    | references | foreign_key: true |
+| product | references | foreign_key: true |
+
+belongs_to :user
+belongs_to :product
