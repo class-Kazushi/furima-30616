@@ -77,19 +77,48 @@
     </div>
   </div>
 
+  <h4><b>★商品への質問・コメント★</b></h4>
+  <div id='comment-show'>
+    <% if @comments %>
+      <% @comments.reverse_each do |comment| %>
+        <p>
+          <%= comment.user.nickname %>: <%= comment.text %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
   <div class="comment-box">
-    <form>
-      <textarea class="comment-text"></textarea>
-      <p class="comment-warn">
-        相手のことを考え丁寧なコメントを心がけましょう。
+    <% if user_signed_in? && @product.purchase_record == nil %>
+      <%= form_with model: [@product, @comment], local: true do |f| %>
+
+        <%= render 'shared/error_messages', model: f.object %>
+
+        <%= f.text_area :text, placeholder: "質問・コメントする", class:"comment-text" %>
+        <p class="comment-warn">
+          <b>※質問・コメントする上での注意※</b>
+          <br>
+          相手のことを考え丁寧なコメントを心がけましょう。
+          <br>
+          不快な言葉遣いなどは利用制限や退会処分となることがあります。
+        </p>
+        <%= f.submit "送信", class:"comment-btn"%>
+          <%= image_tag "comment.png" ,class:"comment-flag-icon" ,width:"30",height:"35"%>
+      <% end %>
+    <% elsif @product.purchase_record == nil %>
+      <div class="no-comment">
+        <strong><p>※新規登録/ログインすると商品に関する
         <br>
-        不快な言葉遣いなどは利用制限や退会処分となることがあります。
-      </p>
-      <button type="submit" class="comment-btn">
-        <%= image_tag "comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>
-        <span>コメントする<span>
-      </button>
-    </form>
+        質問やコメントができます！！</p>
+        </strong>
+      </div>
+    <% else %>
+      <div class="sold-out-comment">
+        <strong><p>※売り切れにつき、
+        <br>
+        質問・コメントを中止します</p></strong>
+      </div>
+    <% end %>
+
   </div>
   <div class="links">
     <a href="#" class="change-item-btn">
